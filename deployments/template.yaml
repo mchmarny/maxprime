@@ -1,22 +1,14 @@
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
-  name: maxprime
-  namespace: demo
+  name: APP_NAME
 spec:
   runLatest:
     configuration:
       revisionTemplate:
         spec:
           container:
-            image: gcr.io/PROJECT_ID/maxprime:IMAGE_SHA
-            resources:
-              requests:
-                memory: "128Mi"
-                cpu: "0.5"
-              limits:
-                memory: "512Mi"
-                cpu: "1"
+            image: gcr.io/PROJECT_ID/APP_NAME:IMAGE_SHA
             env:
             - name: RELEASE
               value: "RELEASE_TAG"
