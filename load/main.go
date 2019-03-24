@@ -14,7 +14,7 @@ import (
 var (
 	count = flag.Int("count", 5, "client count")
 	prime = flag.Int("prime", 999999, "calculate largest prime less than")
-	url   = flag.String("url", "https://maxprime.demo.knative.tech", "endpoint to get")
+	url   = flag.String("url", "https://maxprime.demo.knative.tech", "prime app URL")
 )
 
 type client struct {

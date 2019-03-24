@@ -87,7 +87,7 @@ git push origin "release-v${RELEASE_VERSION}"
 git log --oneline
 ```
 
-## Logs
+### Logs
 
 You can monitor progress of your build but first finding its id
 
@@ -103,3 +103,28 @@ gcloud builds describe BUILD_ID
 
 You can always also navigate to the [Build History](https://console.cloud.google.com/cloud-build/builds) screen in UI and see it there.
 
+## Load
+
+
+First forward Knative Monitoring (Grafan) to a local port (`3000`)
+
+```shell
+kubectl port-forward -n knative-monitoring \
+    $(kubectl get pods -n knative-monitoring --selector=app=grafana \
+    --output=jsonpath="{.items..metadata.name}") 3000
+```
+
+Now you can view the Knative revision dashboard [here](http://localhost:3000/d/im_gFbWik/knative-serving-revision-http-requests?refresh=3s&orgId=1&var-namespace=demo&var-configuration=maxprime&var-revision=All)
+
+You can also view the `maxprime` pods beign scaled here
+
+```shell
+watch kubectl get pods -n demo -l serving.knative.dev/service=maxprime
+```
+
+And finally, to generate some load, run the included load generator. `--count` is the number of concurrent client (threads), `--prime` is the max number to calculate prime for, and `--url` is the target URL where `maxprime` demo is deployed (no final slash).
+
+```
+go run load/main.go --count 300 --prime 99999 \
+    --url https://maxprime.demo.knative.tech
+```
