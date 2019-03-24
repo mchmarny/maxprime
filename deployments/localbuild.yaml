@@ -1,0 +1,28 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: maxprime
+  namespace: demo
+spec:
+  runLatest:
+    configuration:
+      build:
+        source:
+          git:
+            url: https://github.com/mchmarny/maxprime.git
+            revision: master
+        template:
+          name: kaniko
+          arguments:
+          - name: IMAGE
+            value: &image gcr.io/s9-demo/maxprime:latest
+      revisionTemplate:
+        metadata:
+          labels:
+            knative.dev/type: app
+        spec:
+          container:
+            image: *image
+            env:
+              - name: RELEASE
+                value: "v0.0.2-manual"

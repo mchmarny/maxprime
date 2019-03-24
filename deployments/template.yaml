@@ -12,3 +12,5 @@ spec:
             env:
             - name: RELEASE
               value: "RELEASE_TAG"
+            - name: GIN_MODE
+              value: "release"
