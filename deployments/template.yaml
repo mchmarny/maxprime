@@ -1,25 +1,21 @@
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
-  name: gocr
+  name: maxprime
   namespace: demo
 spec:
   runLatest:
     configuration:
       revisionTemplate:
-        metadata:
-          labels:
-            demo: gocr
         spec:
           container:
-            image: gcr.io/PROJECT_ID/gocr:IMAGE_SHA
-            imagePullPolicy: Always
+            image: gcr.io/PROJECT_ID/maxprime:IMAGE_SHA
             resources:
               requests:
                 memory: "128Mi"
                 cpu: "0.5"
               limits:
-                memory: "256Mi"
+                memory: "512Mi"
                 cpu: "1"
             env:
             - name: RELEASE
