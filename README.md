@@ -1,28 +1,26 @@
 # maxprime
 
-REST service calculating prime number, good for infrastructure scaling demo
+UI and REST service demo calculating highest prime number up to the number specified by the user. Good for infrastructure scaling demo
 
-## Install
+> Note, this app is also used to demonstrate GitOps on Knative using Cloud Build. See the GitOps section below
 
-```
-go get github.com/golang/dep/cmd/dep
-dep ensure
-```
+## Demo
 
-## Run
+Live version of this app is available at
+https://maxprime.demo.knative.tech
 
 ### Request
 
-To calculate the highest prime number under the default (50000000)
+To calculate the highest prime number in UI
 
 ```
 curl http://localhost:8080
 ```
 
-You can also pass max number as an argument. Note, if you pass too high of a number the HTTP request will timeout.
+You can also pass max number using REST service
 
 ```
-curl http://localhost:8080/5000000
+curl http://localhost:8080/prime/5000000
 ```
 
 ### Response
@@ -31,26 +29,22 @@ curl http://localhost:8080/5000000
 
 ```
 {
-    "id": "98e26178-7f90-497c-8189-88054d8bd542",
+    "id": "0fe3fa30-627e-46cc-be09-a9de62252ff1",
+    "ts": "2019-03-24 13:54:14.917105 +0000 UTC",
+    "dur": "724.848232ms",
+    "rel": "v0.0.1",
     "prime": {
-        "max": 5000000,
-        "val": 4999963
-    },
-    "host": "machinename.local",
-    "ts": "2018-02-18 23:28:37.961918 +0000 UTC"
+        "max": 50000340,
+        "val": 50000329
+    }
 }
 ```
 
-
-
-
-> GitOps demo using Cloud Build and Knative
-
-Live demo: https://gocr.demo.knative.tech/
+## GitOps
 
 Simple setup to automate Knative deployments using Git and Cloud Build
 
-As a developer, you write code and commit it to a repo. You also hopefully run tests on that code for each commit. Assuming your application passes all the tests, you may want to deploy it to Knative cluster. You can do it form your workstation by using any one of the Knative CLIs (e.g. gcloud, knctl, tm etc.).
+As a developer, you write code and commit it to a git repo. You also hopefully run tests on that code for each commit. Assuming your application passes all the tests, you may want to deploy it to Knative cluster. You can do it form your workstation by using any one of the Knative CLIs (e.g. gcloud, knctl, tm etc.).
 
 In this demo however we are going to demonstrate deploying directly from git repository. This means that you as a developer do not need install anything on your machine other than the standard git tooling. Here is the outline:
 
@@ -64,11 +58,9 @@ In this demo however we are going to demonstrate deploying directly from git rep
 
 > As an add-on, we are also going to send mobile notification with build status using [knative-build-status-notifs](https://github.com/mchmarny/knative-build-status-notifs)
 
-## Setup
+### Setup
 
-You will have to [configure git trigger](https://pantheon.corp.google.com/cloud-build/triggers/add) in Cloud Build first. There doesn't seem to be a way to do this using `gcloud`.
-
-![kpush flow](static/img/src.png)
+You will have to [configure git trigger](https://console.cloud.google.com/cloud-build/triggers/add) in Cloud Build first. There doesn't seem to be a way to do this using `gcloud`.
 
 Then setup IAM policy binding to allow Cloud Builder deploy build image to your cluster
 
@@ -82,10 +74,8 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
 Finally submit the Cloud Build configuration
 
 ```shell
-gcloud builds submit --config deployments/cloudbuild.yaml
+gcloud builds submit --config deployments/build.yaml
 ```
-
-![kpush flow](static/img/trigger.png)
 
 ## Deployment
 
@@ -111,5 +101,5 @@ And then describing it
 gcloud builds describe BUILD_ID
 ```
 
-You can always also navigate to the [Build History](https://pantheon.corp.google.com/cloud-build/builds?folder=&organizationId=433637338589&project=s9-demo) screen in UI and see it there.
+You can always also navigate to the [Build History](https://console.cloud.google.com/cloud-build/builds) screen in UI and see it there.
 

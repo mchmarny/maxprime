@@ -3,12 +3,8 @@ package main
 import (
 	"log"
 	"fmt"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mchmarny/maxprime/util"
-
-
 )
 
 const (
@@ -17,7 +13,7 @@ const (
 )
 
 var (
-	release   = util.MustGetEnv("RELEASE", "v0.0.0 (Not set)")
+	release   = getEnv("RELEASE", "v0.0.0 (Not set)")
 )
 
 func main() {
@@ -26,34 +22,25 @@ func main() {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+
+	// static
 	r.LoadHTMLFiles("./templates/index.html")
 	r.Static("/img", "./static/img")
 	r.Static("/css", "./static/css")
+	r.Static("/js", "./static/js")
 
-	// root & health
-	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", map[string]interface{}{
-			"release": release,
-		})
-	})
+	// routes
+	r.GET("/", homeHandler)
 	r.GET("/health", healthHandler)
-
-	// prime
 	r.GET("/prime", defaultPrimeHandler)
-	r.GET("/prime/:max", primeWithArgHandler)
-
+	r.GET("/prime/:max", primeArgHandler)
 
 	// port
-	port := util.MustGetEnv(portVariableName, defaultPort)
+	port := getEnv(portVariableName, defaultPort)
 	addr := fmt.Sprintf(":%s", port)
 	log.Printf("Server starting: %s \n", addr)
 	if err := r.Run(addr); err != nil {
 		log.Fatal(err)
 	}
 
-}
-
-
-func healthHandler(c *gin.Context) {
-	c.String(http.StatusOK, "OK")
 }

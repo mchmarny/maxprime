@@ -11,6 +11,8 @@
     <meta http-equiv="Pragma" content="-1">
     <link href="img/favicon.ico" rel="shortcut icon" />
     <link rel="stylesheet" href="css/app.css" />
+    <script src="js/lib.js"></script>
+    <script src="js/app.js"></script>
 </head>
 
 <body>
@@ -25,13 +27,29 @@
         </div>
 
 
-        Test
+        <!-- Primer -->
+        <div id="prime">
+
+            <form>
+                <!-- Ceiling also set on the server -->
+                <input id="calc-val-ceiling" type="hidden" value="{{ .ceiling }}">
+                <input id="calc-val" type="text" value="{{ .max }}">
+                <a href="#" id="calc-button">Calculate</a>
+            </form>
+
+            <div id="calc-result"> </div>
+
+            <div>
+                REST query:
+                <a id="prime-link" href="/prime/{{ .max }}">/prime/{{ .max }}</a>
+            </div>
+
+        </div>
 
 
         <!-- Footer -->
         <div id="page-footer">
-            <p id="release">
-                Serving:
+            <p>
                 <a href="https://github.com/mchmarny/maxprime/tree/{{ .release }}">{{ .release }}</a>
             </p>
             <p>
