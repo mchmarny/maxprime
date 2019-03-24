@@ -29,7 +29,7 @@ steps:
   - |
       sed -e \
       's/PROJECT_ID/${PROJECT_ID}/g; s/RELEASE_TAG/${TAG_NAME}/g; s/IMAGE_SHA/${SHORT_SHA}/g' \
-      deployments/service.yaml > deployments/final.yaml
+      deployments/template.yaml > deployments/final.yaml
 
 
 # deploy service to Knative cluster using the above gen'd manifest
