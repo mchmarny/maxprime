@@ -1,0 +1,26 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: gocr
+  namespace: demo
+spec:
+  runLatest:
+    configuration:
+      revisionTemplate:
+        metadata:
+          labels:
+            demo: gocr
+        spec:
+          container:
+            image: gcr.io/PROJECT_ID/gocr:IMAGE_SHA
+            imagePullPolicy: Always
+            resources:
+              requests:
+                memory: "128Mi"
+                cpu: "0.5"
+              limits:
+                memory: "256Mi"
+                cpu: "1"
+            env:
+            - name: RELEASE
+              value: "RELEASE_TAG"
