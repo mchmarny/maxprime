@@ -16,6 +16,11 @@ image:
 		--project=$(PROJECT_ID) \
 		--tag gcr.io/$(PROJECT_ID)/maxprime .
 
+image-sample:
+	gcloud builds submit \
+		--project=knative-samples \
+		--tag gcr.io/knative-samples/maxprime .
+
 submit:
 	gcloud builds submit --config deployments/cloudbuild.yaml
 

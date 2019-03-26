@@ -9,7 +9,10 @@ spec:
         spec:
           # containerConcurrency: 1
           container:
-            image: gcr.io/s9-demo/maxprime:latest
+            # image: gcr.io/s9-demo/maxprime:latest
+            image: gcr.io/knative-samples/maxprime
             env:
             - name: RELEASE
-              value: "v0.0.2"
+              value: "RELEASE_TAG"
+            - name: GIN_MODE
+              value: "release"
