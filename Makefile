@@ -22,7 +22,9 @@ image-sample:
 		--tag gcr.io/knative-samples/maxprime .
 
 submit:
-	gcloud builds submit --config deployments/cloudbuild.yaml
+	gcloud builds submit \
+		--project=knative-samples \
+		--config deployments/cloudbuild.yaml
 
 deploy:
 	kubectl apply -f deployments/service.yaml

@@ -40,3 +40,10 @@ steps:
   - 'CLOUDSDK_COMPUTE_ZONE=${_CLUSTER_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
 
+substitutions:
+    _APP_NAME: maxprime
+    _APP_NS: demo
+    _CLUSTER_NAME: kn-v04
+    _CLUSTER_ZONE: us-west1-a
+
+tags: ['knative', 'demo']
