@@ -43,7 +43,7 @@ steps:
 substitutions:
     _APP_NAME: maxprime
     _APP_NS: next
-    _CLUSTER_NAME: next-demo
-    _CLUSTER_ZONE: us-central1-a
+    _CLUSTER_NAME: next
+    _CLUSTER_ZONE: us-west1-c
 
 tags: ['knative', 'demo']
