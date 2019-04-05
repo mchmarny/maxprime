@@ -13,6 +13,6 @@ spec:
             image: gcr.io/knative-samples/maxprime
             env:
             - name: RELEASE
-              value: "RELEASE_TAG"
+              value: "v0.0.1-manual"
             - name: GIN_MODE
               value: "release"

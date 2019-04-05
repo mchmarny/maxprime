@@ -5,8 +5,7 @@ steps:
 - name: 'golang:latest'
   id: Test
   entrypoint: /bin/sh
-  args: ['-c','export GO111MODULE=on','go mod download','go test ./... -v']
-
+  args: ['-c','export GO111MODULE=on','go mod tidy','go test ./...']
 
 # build image
 - name: 'gcr.io/cloud-builders/docker'
@@ -31,8 +30,7 @@ steps:
       's/PROJECT_ID/${PROJECT_ID}/g; s/APP_NAME/${_APP_NAME}/g; s/RELEASE_TAG/${TAG_NAME}/g; s/IMAGE_SHA/${SHORT_SHA}/g' \
       deployments/template.yaml > deployments/final.yaml
 
-
-# deploy service to Knative cluster using the above gen'd manifest
+# deploy service to Cloud Run cluster using the above gen'd manifest
 - name: 'gcr.io/cloud-builders/kubectl'
   id: Deploy
   args: ['apply','-f','deployments/final.yaml', '-n', '${_APP_NS}']
