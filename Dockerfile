@@ -7,7 +7,7 @@ COPY . /src/
 # build gauther
 WORKDIR /src/
 ENV GO111MODULE=on
-RUN go mod download
+RUN go mod tidy
 RUN CGO_ENABLED=0 go build -o /maxprime
 
 

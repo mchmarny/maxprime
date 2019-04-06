@@ -27,7 +27,7 @@ trigger:
 	# https://cloudbuild.googleapis.com/v1/projects/$%7BPROJECT_ID%7D/triggers
 
 deploy:
-	kubectl apply -f deployments/service.yaml
+	kubectl apply -f deployments/service.yaml -n demo
 
 tag:
 	git tag "release-v${RELEASE_VERSION}"
