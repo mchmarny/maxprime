@@ -1,15 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
-	"os"
-	"fmt"
 
-	"github.com/google/uuid"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 const (
@@ -31,7 +31,7 @@ func healthHandler(c *gin.Context) {
 func homeHandler(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.html", map[string]interface{}{
 		"release": release,
-		"max": defaultMaxNumber,
+		"max":     defaultMaxNumber,
 		"ceiling": maxNumberCeiling,
 	})
 }
@@ -74,15 +74,13 @@ func defaultPrimeHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, getPrimeResponse(defaultMaxNumber))
 }
 
-
-
 // PrimeResponse represents body of the prime request response
 type PrimeResponse struct {
-	ID      string `json:"id"`
-	Ts      string `json:"ts"`
+	ID       string `json:"id"`
+	Ts       string `json:"ts"`
 	Duration string `json:"dur"`
-	Release string `json:"rel"`
-	Prime   *prime `json:"prime"`
+	Release  string `json:"rel"`
+	Prime    *prime `json:"prime"`
 }
 
 func getPrimeResponse(maxNum int) *PrimeResponse {
@@ -92,16 +90,15 @@ func getPrimeResponse(maxNum int) *PrimeResponse {
 	d := time.Since(s)
 
 	resp := &PrimeResponse{
-		ID:      newID(),
-		Duration: fmt.Sprintf("%s", d % time.Second),
-		Prime:   p,
-		Ts:      time.Now().UTC().String(),
-		Release: release,
+		ID:       newID(),
+		Duration: fmt.Sprintf("%s", d%time.Second),
+		Prime:    p,
+		Ts:       time.Now().UTC().String(),
+		Release:  release,
 	}
 
 	return resp
 }
-
 
 func newID() string {
 	id, err := uuid.NewRandom()

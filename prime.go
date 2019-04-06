@@ -2,6 +2,7 @@ package main
 
 import (
 	"math"
+	"math/big"
 )
 
 type prime struct {
@@ -10,6 +11,14 @@ type prime struct {
 }
 
 func calcPrime(maxNumber int) *prime {
+
+	// if prime, just return it
+	if big.NewInt(int64(maxNumber)).ProbablyPrime(0) {
+		return &prime{
+			Max:   maxNumber,
+			Value: maxNumber,
+		}
+	}
 
 	var x, y, n int
 	nsqrt := math.Sqrt(float64(maxNumber))
