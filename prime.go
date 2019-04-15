@@ -12,12 +12,15 @@ type prime struct {
 
 func calcPrime(maxNumber int) *prime {
 
-	// if prime, just return it
+	result := &prime{
+		Max: maxNumber,
+	}
+
+	// if prime, increment to keep the execution time
+	// the result will be the same but the run time for
+	// primes won't be artificially short
 	if big.NewInt(int64(maxNumber)).ProbablyPrime(0) {
-		return &prime{
-			Max:   maxNumber,
-			Value: maxNumber,
-		}
+		maxNumber++
 	}
 
 	var x, y, n int
@@ -59,9 +62,7 @@ func calcPrime(maxNumber int) *prime {
 			primes = append(primes, x)
 		}
 	}
+	result.Value = primes[len(primes)-1]
 
-	return &prime{
-		Max:   maxNumber,
-		Value: primes[len(primes)-1],
-	}
+	return result
 }
