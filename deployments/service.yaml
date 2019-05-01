@@ -7,9 +7,7 @@ spec:
     configuration:
       revisionTemplate:
         spec:
-          # containerConcurrency: 1
           container:
-            # image: gcr.io/s9-demo/maxprime:latest
             image: gcr.io/knative-samples/maxprime:latest
             env:
             - name: RELEASE

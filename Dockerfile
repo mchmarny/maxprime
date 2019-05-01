@@ -1,28 +1,19 @@
-# build from latest go image
-FROM golang:latest as build
+# BUILD
+FROM golang:latest as builder
 
-WORKDIR /go/src/github.com/mchmarny/maxprime/
+# copy
+WORKDIR /src/
 COPY . /src/
 
-# build gauther
-WORKDIR /src/
+# build
 ENV GO111MODULE=on
-RUN go mod tidy
-RUN CGO_ENABLED=0 go build -o /maxprime
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+    go build -a -tags netgo \
+    -ldflags '-w -extldflags "-static"' \
+    -mod vendor \
+    -o maxprime
 
-
-
-# run image
-FROM alpine as release
-RUN apk add --no-cache ca-certificates
-
-# app executable
-COPY --from=build /maxprime /app/
-
-# static dependancies
-COPY --from=build /src/templates /app/templates/
-COPY --from=build /src/static /app/static/
-
-# start server
-WORKDIR /app
-ENTRYPOINT ["./maxprime"]
+# RUN
+FROM gcr.io/distroless/static
+COPY --from=builder /src/maxprime .
+ENTRYPOINT ["/maxprime"]

@@ -16,7 +16,7 @@ image:
 		--project=$(PROJECT_ID) \
 		--tag gcr.io/$(PROJECT_ID)/maxprime .
 
-image-sample:
+sample-image:
 	gcloud builds submit \
 		--project=knative-samples \
 		--tag gcr.io/knative-samples/maxprime .
