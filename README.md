@@ -2,6 +2,8 @@
 
 UI and REST service demo calculating highest prime number up to the number specified by the user. Good for infrastructure scaling demo
 
+[![Run on Google Cloud](https://storage.googleapis.com/cloudrun/button.png)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/cloudrun/button&cloudshell_git_repo=https://github.com/mchmarny/maxprime.git)
+
 > Note, this app is also used to demonstrate GitOps on Knative using Cloud Build. See the GitOps section below
 
 ## Demo
