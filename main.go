@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +15,7 @@ const (
 
 var (
 	release = getEnv("RELEASE", "v0.0.1")
+	logger  = log.New(os.Stdout, "[MAXPRIME] ", 0)
 )
 
 func main() {
@@ -22,7 +24,7 @@ func main() {
 
 	// router
 	r := gin.New()
-	r.Use(gin.Logger())
+	//r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
 	// static
@@ -40,8 +42,8 @@ func main() {
 	// port
 	port := getEnv(portVariableName, defaultPort)
 	addr := fmt.Sprintf(":%s", port)
-	log.Printf("Server starting: %s \n", addr)
+	logger.Printf("Server starting: %s \n", addr)
 	if err := r.Run(addr); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 }

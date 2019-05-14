@@ -40,7 +40,7 @@ func homeHandler(c *gin.Context) {
 func primeArgHandler(c *gin.Context) {
 
 	maxVar := c.Param("max")
-	log.Printf("max == %s", maxVar)
+	logger.Printf("max == %s", maxVar)
 	if maxVar == "" {
 		log.Println("Error on nil max parameter")
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -52,7 +52,7 @@ func primeArgHandler(c *gin.Context) {
 
 	maxNum, err := strconv.Atoi(maxVar)
 	if err != nil {
-		log.Printf("Error while parsing max parameter: %v", err)
+		logger.Printf("Error while parsing max parameter: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Invalid Argument",
 			"status":  "BadRequest",
@@ -104,7 +104,7 @@ func getPrimeResponse(maxNum int) *PrimeResponse {
 func newID() string {
 	id, err := uuid.NewRandom()
 	if err != nil {
-		log.Fatalf("Error while getting id: %v\n", err)
+		logger.Fatalf("Error while getting id: %v\n", err)
 	}
 	return id.String()
 }
@@ -114,7 +114,7 @@ func getEnv(key, fallbackValue string) string {
 		return val
 	}
 	if fallbackValue == "" {
-		log.Fatalf("Required env var (%s) not set", key)
+		logger.Fatalf("Required env var (%s) not set", key)
 	}
 	return fallbackValue
 }

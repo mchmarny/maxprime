@@ -9,6 +9,8 @@ import (
 	"os/signal"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 var (
@@ -53,6 +55,7 @@ func (c *client) start(stopCh <-chan struct{}) {
 }
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 	flag.Parse()
 	if *count < 1 {
 		panic("count must be at least 1")
