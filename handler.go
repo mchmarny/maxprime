@@ -21,7 +21,8 @@ const (
 
 var (
 	// allow to override the max number ceiling
-	maxNumberCeiling = getEnvAsInt("MAX_NUMBER_CEILING", defaultMaxNumberCeiling)
+	// getEnvAsInt("MAX_NUMBER_CEILING", defaultMaxNumberCeiling)
+	maxNumberCeiling = defaultMaxNumberCeiling
 )
 
 func healthHandler(c *gin.Context) {
@@ -116,21 +117,4 @@ func getEnv(key, fallbackValue string) string {
 		log.Fatalf("Required env var (%s) not set", key)
 	}
 	return fallbackValue
-}
-
-func getEnvAsInt(key string, fallbackValue int) int {
-	val, ok := os.LookupEnv(key)
-
-	if !ok {
-		log.Printf("Env var '%s' not set", key)
-		return fallbackValue
-	}
-
-	valNum, err := strconv.Atoi(val)
-	if err != nil {
-		log.Printf("Error parsing env var '%s' set to '%s' as int", key, val)
-		return fallbackValue
-	}
-
-	return valNum
 }

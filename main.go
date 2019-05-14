@@ -1,8 +1,8 @@
 package main
 
 import (
-	"log"
 	"fmt"
+	"log"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,10 +13,12 @@ const (
 )
 
 var (
-	release   = getEnv("RELEASE", "v0.0.0 (Not set)")
+	release = getEnv("RELEASE", "v0.0.1")
 )
 
 func main() {
+
+	gin.SetMode(gin.ReleaseMode)
 
 	// router
 	r := gin.New()

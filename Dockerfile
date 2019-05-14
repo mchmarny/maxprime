@@ -15,5 +15,9 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
 
 # RUN
 FROM gcr.io/distroless/static
-COPY --from=builder /src/maxprime .
-ENTRYPOINT ["/maxprime"]
+COPY --from=builder /src/maxprime /app/
+COPY --from=builder /src/templates /app/templates/
+COPY --from=builder /src/static /app/static/
+
+WORKDIR /app
+ENTRYPOINT ["./maxprime"]
