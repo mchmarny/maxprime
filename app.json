@@ -1,0 +1,15 @@
+{
+    "name": "maxprime",
+    "env": {
+        "RELEASE": {
+            "description": "release version",
+            "value": "v0.1-button",
+            "required": true
+        },
+        "GIN_MODE": {
+            "description": "gin release mode",
+            "value": "release",
+            "required": true
+        }
+    }
+}
