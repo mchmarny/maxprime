@@ -10,7 +10,7 @@ spec:
           container:
             image: gcr.io/knative-samples/maxprime:latest
             env:
-            - name: RELEASE
-              value: "v0.0.4-manual"
-            - name: GIN_MODE
-              value: "release"
+              - name: RELEASE
+                value: "v0.0.4-manual"
+              - name: GIN_MODE
+                value: "release"
