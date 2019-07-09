@@ -41,6 +41,6 @@ substitutions:
     _APP_NAME: maxprime
     _APP_NS: demo
     _CLUSTER_NAME: kn07
-    _CLUSTER_ZONE: us-west1
+    _CLUSTER_ZONE: us-west1-c
 
 tags: ["knative", "demo"]
