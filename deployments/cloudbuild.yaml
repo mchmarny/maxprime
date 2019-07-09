@@ -40,7 +40,7 @@ steps:
 substitutions:
     _APP_NAME: maxprime
     _APP_NS: demo
-    _CLUSTER_NAME: cr
-    _CLUSTER_ZONE: us-east1
+    _CLUSTER_NAME: kn07
+    _CLUSTER_ZONE: us-west1
 
 tags: ["knative", "demo"]
