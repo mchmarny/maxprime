@@ -1,30 +1,55 @@
 workflow "Publish container to Docker" {
-  resolves = ["Push"]
-  on = "push"
+  on       = "push"
+
+  resolves = [
+    "Push"
+  ]
 }
 
 action "Test" {
-  needs = ["Lint"]
   uses = "./.github/actions/golang"
   args = "test"
 }
 
 action "Build" {
-  needs = ["Test"]
-  uses = "./.github/actions/docker"
-  secrets = ["DOCKER_IMAGE"]
-  args = ["build", "Dockerfile"]
+  uses    = "./.github/actions/docker"
+
+  needs   = [
+    "Test"
+  ]
+
+  secrets = [
+    "DOCKER_IMAGE"
+  ]
+
+  args    = [
+    "build",
+    "Dockerfile"
+  ]
 }
 
 action "Login" {
-  needs = ["Build"]
-  uses = "actions/docker/login@master"
-  secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
+  uses    = "actions/docker/login@master"
+
+  needs   = [
+    "Build"
+  ]
+
+  secrets = [
+    "DOCKER_USERNAME",
+    "DOCKER_PASSWORD"
+  ]
 }
 
 action "Push" {
-  needs = ["Login"]
-  uses = "./.github/actions/docker"
-  secrets = ["DOCKER_IMAGE"]
-  args = "push"
+  uses    = "./.github/actions/docker"
+  args    = "push"
+
+  needs   = [
+    "Login"
+  ]
+
+  secrets = [
+    "DOCKER_IMAGE"
+  ]
 }
