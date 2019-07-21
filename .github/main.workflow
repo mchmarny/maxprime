@@ -3,11 +3,6 @@ workflow "Publish container to Docker" {
   on = "push"
 }
 
-action "Lint" {
-  uses = "./.github/actions/golang"
-  args = "fmt"
-}
-
 action "Test" {
   needs = ["Lint"]
   uses = "./.github/actions/golang"
