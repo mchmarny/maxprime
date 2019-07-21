@@ -1,6 +1,6 @@
-workflow "Publish container" {
-  on = "push"
+workflow "Publish container to Docker" {
   resolves = ["Push"]
+  on = "push"
 }
 
 action "Lint" {
