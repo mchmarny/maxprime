@@ -36,8 +36,13 @@ func main() {
 	// routes
 	r.GET("/", homeHandler)
 	r.GET("/health", healthHandler)
-	r.GET("/prime", defaultPrimeHandler)
-	r.GET("/prime/:max", primeArgHandler)
+
+	// api
+	v1 := r.Group("/v1")
+	{
+		v1.GET("/prime", defaultPrimeHandler)
+		v1.GET("/prime/:max", primeArgHandler)
+	}
 
 	// port
 	port := getEnv(portVariableName, defaultPort)
