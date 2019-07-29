@@ -76,7 +76,7 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
 Finally submit the Cloud Build configuration
 
 ```shell
-gcloud builds submit --config deployments/build.yaml
+gcloud builds submit --config deployments/cloudbuild.yaml
 ```
 
 ## Deployment
