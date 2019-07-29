@@ -64,6 +64,10 @@ In this demo however we are going to demonstrate deploying directly from git rep
 
 You will have to [configure git trigger](https://console.cloud.google.com/cloud-build/triggers/add) in Cloud Build first. There doesn't seem to be a way to do this using `gcloud`.
 
+> Trigger type: Tag
+> Tag (regex): `release-*`
+> Build configuration: `deployment/cloudbuild.yaml`
+
 Then setup IAM policy binding to allow Cloud Builder deploy build image to your cluster
 
 ```shell
