@@ -62,7 +62,18 @@ In this demo however we are going to demonstrate deploying directly from git rep
 
 ### Setup
 
+You will be using a number of GCP APIs, so you can enable them all now: 
+```
+gcloud services enable \
+    run.googleapis.com \
+    cloudbuild.googleapis.com
+```
+
 You will have to [configure git trigger](https://console.cloud.google.com/cloud-build/triggers/add) in Cloud Build first. There doesn't seem to be a way to do this using `gcloud`.
+
+> Trigger type: Tag
+> Tag (regex): `release-*`
+> Build configuration: `deployments/cloudbuild.yaml`
 
 Then setup IAM policy binding to allow Cloud Builder deploy build image to your cluster
 
@@ -73,10 +84,13 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
     --role=roles/container.developer
 ```
 
+You will also need to change the `deployments/cloudbuild.yaml` file to name your app and cluster information. 
+
+
 Finally submit the Cloud Build configuration
 
 ```shell
-gcloud builds submit --config deployments/build.yaml
+gcloud builds submit --config deployments/cloudbuild.yaml
 ```
 
 ## Deployment
