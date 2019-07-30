@@ -34,11 +34,6 @@ kimage:
 		--project=knative-samples \
 		--tag gcr.io/knative-samples/maxprime .
 
-trigger:
-	# TODO: Implement on-demand build
-	# https://github.com/kelseyhightower/pipeline/blob/master/labs/build-triggers.md
-	# https://cloudbuild.googleapis.com/v1/projects/$%7BPROJECT_ID%7D/triggers
-
 apply:
 	kubectl apply -f deployments/service.yaml -n demo
 
