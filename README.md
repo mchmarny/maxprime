@@ -73,7 +73,7 @@ You will have to [configure git trigger](https://console.cloud.google.com/cloud-
 
 > Trigger type: Tag
 > Tag (regex): `release-*`
-> Build configuration: `deployment/cloudbuild.yaml`
+> Build configuration: `deployments/cloudbuild.yaml`
 
 Then setup IAM policy binding to allow Cloud Builder deploy build image to your cluster
 
