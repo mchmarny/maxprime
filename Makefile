@@ -1,12 +1,18 @@
 RELEASE_VERSION=0.1.1
+PROJECT_NUMBER=$(shell gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')
+COMMIT_SHA=$(shell git rev-parse HEAD)
+APP_NS?=demo
+CLUSTER_NAME?=kn07
+CLUSTER_ZONE?=us-west1-c
 
-all: test policy
+.PHONY: run policy deploy image kimage trigger apply tag
+
+all: test
 
 run:
 	go run *.go
 
 policy:
-	PROJECT_NUMBER="$(gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')"
 	gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
     	--member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
     	--role=roles/container.developer
@@ -15,7 +21,7 @@ deploy:
 	gcloud builds submit \
 		--project=$(PROJECT_ID) \
 		--config=deployments/cloudbuild.yaml \
-		--substitutions=_APP_NAME=maxprime,_APP_NS=demo,_CLUSTER_NAME=kn07,_CLUSTER_ZONE=us-west1-c \
+		--substitutions=_APP_NAME=maxprime,_APP_NS=$(APP_NS),_CLUSTER_NAME=kn07,_CLUSTER_ZONE=$(CLUSTER_ZONE),SHORT_SHA=$(COMMIT_SHA) \
 		.
 
 image:
