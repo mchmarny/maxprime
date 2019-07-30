@@ -62,6 +62,13 @@ In this demo however we are going to demonstrate deploying directly from git rep
 
 ### Setup
 
+You will be using a number of GCP APIs, so you can enable them all now: 
+```
+gcloud services enable \
+    run.googleapis.com \
+    cloudbuild.googleapis.com
+```
+
 You will have to [configure git trigger](https://console.cloud.google.com/cloud-build/triggers/add) in Cloud Build first. There doesn't seem to be a way to do this using `gcloud`.
 
 > Trigger type: Tag
