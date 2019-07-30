@@ -84,6 +84,9 @@ gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
     --role=roles/container.developer
 ```
 
+You will also need to change the `deployments/cloudbuild.yaml` file to name your app and cluster information. 
+
+
 Finally submit the Cloud Build configuration
 
 ```shell
