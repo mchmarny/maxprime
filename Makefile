@@ -11,12 +11,19 @@ policy:
     	--member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
     	--role=roles/container.developer
 
-image:
+deploy:
 	gcloud builds submit \
 		--project=$(PROJECT_ID) \
-		--tag gcr.io/$(PROJECT_ID)/maxprime .
+		--config=deployments/cloudbuild.yaml \
+		--substitutions=_APP_NAME=maxprime,_APP_NS=demo,_CLUSTER_NAME=kn07,_CLUSTER_ZONE=us-west1-c \
+		.
 
-sample-image:
+image:
+	gcloud builds submit \
+		--project=cloudylabs-public \
+		--tag gcr.io/cloudylabs-public/maxprime .
+
+kimage:
 	gcloud builds submit \
 		--project=knative-samples \
 		--tag gcr.io/knative-samples/maxprime .
@@ -26,7 +33,7 @@ trigger:
 	# https://github.com/kelseyhightower/pipeline/blob/master/labs/build-triggers.md
 	# https://cloudbuild.googleapis.com/v1/projects/$%7BPROJECT_ID%7D/triggers
 
-deploy:
+apply:
 	kubectl apply -f deployments/service.yaml -n demo
 
 tag:
