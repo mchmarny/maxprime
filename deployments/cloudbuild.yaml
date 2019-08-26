@@ -32,7 +32,7 @@ steps:
     id: Deploy
     args: ["apply", "-f", "deployments/final.yaml", "-n", "${_APP_NS}"]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=${_CLUSTER_ZONE}"
+      - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_REGION}"
       - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
 tags: ["knative", "demo"]
