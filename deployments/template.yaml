@@ -10,7 +10,7 @@ spec:
           container:
             image: gcr.io/PROJECT_ID/APP_NAME:IMAGE_SHA
             env:
-            - name: RELEASE
-              value: "RELEASE_TAG"
-            - name: GIN_MODE
-              value: "release"
+              - name: RELEASE
+                value: "RELEASE_TAG"
+              - name: GIN_MODE
+                value: "release"
