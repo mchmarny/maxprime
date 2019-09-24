@@ -1,4 +1,4 @@
-RELEASE_VERSION=0.1.1
+RELEASE_VERSION=0.2.1
 PROJECT_NUMBER=$(shell gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')
 COMMIT_SHA=$(shell git rev-parse HEAD)
 APP_NS?=demo
@@ -27,12 +27,7 @@ deploy:
 image:
 	gcloud builds submit \
 		--project=cloudylabs-public \
-		--tag gcr.io/cloudylabs-public/maxprime .
-
-kimage:
-	gcloud builds submit \
-		--project=knative-samples \
-		--tag gcr.io/knative-samples/maxprime .
+		--tag "gcr.io/cloudylabs-public/maxprime:${RELEASE_VERSION}" .
 
 apply:
 	kubectl apply -f deployments/service.yaml -n demo

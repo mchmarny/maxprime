@@ -23,13 +23,13 @@ $(function () {
         $("#calc-result").html("Calculating...");
         var maxNum = $("#calc-val").val();
         var restList = $("#prime-link");
-        $.get("/prime/" + maxNum, function (data) {
+        $.get("/v1/prime/" + maxNum, function (data) {
             // console.log(data);
             $(document.body).css({ "cursor": "default" });
             if (data && data.prime && data.prime.val) {
                 $("#calc-result").html("Highest prime: <b>" + data.prime.val + "</b> (duration: " + data.dur + ")");
-                restList.attr("href", "/prime/" + data.prime.max);
-                restList.html("/prime/" + data.prime.max);
+                restList.attr("href", "/v1/prime/" + data.prime.max);
+                restList.html("/v1/prime/" + data.prime.max);
             } else {
                 $("#calc-result").html("<b>Error:</b> " + data);
             }
