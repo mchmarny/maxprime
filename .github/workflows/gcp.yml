@@ -30,7 +30,7 @@ jobs:
         uses: actions/gcloud/cli@master
         with:
           entrypoint: sh
-          args: -c "docker push eu.gcr.io/${{ secrets.GCLOUD_PROJECT }}/maxprime"
+          args: -c "docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/maxprime"
 
       - name: Install beta commands and deploy on cloud run
         uses: actions/gcloud/cli@master
