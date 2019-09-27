@@ -1,8 +1,12 @@
 name: Deploy the application to Google Cloud Run
+
 on:
   push:
-    branches:
-      - 'master'
+    branches:    
+      - master
+    tags:        
+      - 'build-v*'
+      
 jobs:
   deploy:
     name: Cloud Run Build and Deploy
