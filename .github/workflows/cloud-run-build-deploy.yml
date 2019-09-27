@@ -39,4 +39,4 @@ jobs:
       - name: Install beta commands and deploy on cloud run
         uses: actions/gcloud/cli@master
         with:
-          args: "components install beta --quiet && gcloud beta run deploy maxprime --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/maxprime --project ${{ secrets.GCLOUD_PROJECT }} --region us-central1 --platform managed"
+          args: "components install beta --quiet && gcloud beta run deploy maxprime --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/maxprime --project ${{ secrets.GCLOUD_PROJECT }} --region us-central1 --platform managed --allow-unauthenticated"
