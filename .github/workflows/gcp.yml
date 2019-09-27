@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - 'master'
-
 jobs:
   deploy:
     name: Cloud Run Build and Deploy
@@ -20,7 +19,7 @@ jobs:
       - name: Authenticate into Google Cloud Platform
         uses: actions/gcloud/auth@master
         env:
-          GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
+          GCLOUD_AUTH: ${{ secrets.GCLOUD_SA_KEY }}
 
       - name: Configure Docker to use Google Cloud Platform
         uses: actions/gcloud/cli@master
