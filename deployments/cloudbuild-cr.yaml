@@ -18,21 +18,7 @@ steps:
 
   # update manifest with few env var (mainly release tag)
   - name: "gcr.io/cloud-builders/gcloud"
-    id: Manifest
-    entrypoint: /bin/sh
-    args:
-      - "-c"
-      - |
-        sed -e \
-        's/PROJECT_ID/${PROJECT_ID}/g; s/APP_NAME/${_APP_NAME}/g; s/RELEASE_TAG/${TAG_NAME}/g; s/IMAGE_SHA/${SHORT_SHA}/g' \
-        deployments/template.yaml > deployments/final.yaml
-
-  # deploy service to Knative cluster using the above gen'd manifest
-  - name: "gcr.io/cloud-builders/kubectl"
     id: Deploy
-    args: ["apply", "-f", "deployments/final.yaml", "-n", "${_APP_NS}"]
-    env:
-      - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
-      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
+    args: ["beta", "run", "deploy", "${_APP_NAME}", "--image", "gcr.io/${PROJECT_ID}/${_APP_NAME}:${SHORT_SHA}", '--region', "${_CLUSTER_REGION}", "--platform", "managed", "--allow-unauthenticated"]
 
-tags: ["knative", "demo"]
+tags: ["run", "demo"]
