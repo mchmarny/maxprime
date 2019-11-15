@@ -1,4 +1,4 @@
-RELEASE_VERSION=0.2.1
+RELEASE_VERSION=0.2.2
 PROJECT_NUMBER=$(shell gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')
 COMMIT_SHA=$(shell git rev-parse HEAD)
 APP_NS?=demo
@@ -25,6 +25,11 @@ deploy:
 		.
 
 image:
+	gcloud builds submit \
+		--project=cloudylabs \
+		--tag "gcr.io/cloudylabs/maxprime:${RELEASE_VERSION}" .
+
+publicimage:
 	gcloud builds submit \
 		--project=cloudylabs-public \
 		--tag "gcr.io/cloudylabs-public/maxprime:${RELEASE_VERSION}" .
