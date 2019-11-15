@@ -24,6 +24,6 @@ steps:
       '--region', "${_CLUSTER_REGION}",
       "--platform", "managed",
       "--allow-unauthenticated",
-      "--set-env-vars", "RELEASE=${SHORT_SHA}"]
+      "--set-env-vars", "RELEASE=${TAG_NAME}"]
 
 tags: ["run", "demo"]
