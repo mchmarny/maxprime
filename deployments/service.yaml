@@ -1,4 +1,4 @@
-apiVersion: serving.knative.dev/v1beta1
+apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: maxprime
@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - image: gcr.io/knative-samples/maxprime:latest
+        - image: gcr.io/knative-samples/maxprime:0.2.1
           env:
             - name: RELEASE
-              value: "v0.0.1-manual"
+              value: "v0.2.1"
