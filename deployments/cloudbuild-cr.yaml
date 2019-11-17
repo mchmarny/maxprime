@@ -1,6 +1,6 @@
 steps:
 
-  # pull latest code and test
+  # test (build failes on error)
   - name: "golang:latest"
     id: Test
     entrypoint: /bin/sh
