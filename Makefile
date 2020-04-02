@@ -1,4 +1,4 @@
-RELEASE_VERSION=0.3.1
+RELEASE_VERSION=0.3.17
 PROJECT_NUMBER=$(shell gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')
 COMMIT_SHA=$(shell git rev-parse HEAD)
 APP_NS?=demo
