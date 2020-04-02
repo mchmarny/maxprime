@@ -1,6 +1,6 @@
 steps:
-  # pull latest code and test
-  # only lang-specic step
+
+  # test (build failes on error)
   - name: "golang:latest"
     id: Test
     entrypoint: /bin/sh
@@ -16,7 +16,7 @@ steps:
     id: Push
     args: ["push", "gcr.io/${PROJECT_ID}/${_APP_NAME}:${SHORT_SHA}"]
 
-  # update manifest with few env var (mainly release tag)
+  # deploy image (new service revision) 
   - name: "gcr.io/cloud-builders/gcloud"
     id: Deploy
     args: ["beta", "run", "deploy", "${_APP_NAME}",
