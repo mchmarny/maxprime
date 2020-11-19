@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - image: gcr.io/knative-samples/maxprime:0.2.1
+        - image: ghcr.io/mchmarny/maxprime:0.4.1
           env:
             - name: RELEASE
-              value: "v0.2.1"
+              value: "v0.4.1"

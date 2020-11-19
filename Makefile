@@ -1,16 +1,13 @@
-RELEASE_VERSION=0.3.17
-PROJECT_NUMBER=$(shell gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')
-COMMIT_SHA=$(shell git rev-parse HEAD)
+RELEASE_VERSION=0.4.1
 APP_NS?=demo
-CLUSTER_NAME?=kn07
-CLUSTER_ZONE?=us-west1-c
-DOCKER_HUB_USER?=mchmarny
+CLUSTER_NAME?=demo
+IMAGE_OWNER ?=$(shell git config --get user.username)
 
-.PHONY: run policy deploy image kimage trigger apply tag
+.PHONY: run policy deploy image ghimage kimage trigger apply tag
 
 all: test
 
-mod:
+tidy:
 	go mod tidy
 	go mod vendor
 
@@ -22,26 +19,21 @@ policy:
     	--member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
     	--role=roles/container.developer
 
-deploy: mod
+deploy: tidy
 	gcloud builds submit \
 		--project=$(PROJECT_ID) \
 		--config=deployments/cloudbuild.yaml \
 		--substitutions=_APP_NAME=maxprime,_APP_NS=$(APP_NS),_CLUSTER_NAME=kn07,_CLUSTER_ZONE=$(CLUSTER_ZONE),SHORT_SHA=$(COMMIT_SHA) \
 		.
 
-image: mod
+image: tidy
 	gcloud builds submit \
 		--project=cloudylabs \
 		--tag "gcr.io/cloudylabs/maxprime:${RELEASE_VERSION}" .
 
-publicimage: mod
-	gcloud builds submit \
-		--project=cloudylabs-public \
-		--tag "gcr.io/cloudylabs-public/maxprime:${RELEASE_VERSION}" .
-
-dockerpush: mod
-	docker build -t "${DOCKER_HUB_USER}/maxprime:${RELEASE_VERSION}" .
-	docker push "${DOCKER_HUB_USER}/maxprime:${RELEASE_VERSION}"
+ghimage: tidy ## Builds and publish image 
+	docker build -t "ghcr.io/$(IMAGE_OWNER)/maxprime:$(RELEASE_VERSION)" .
+	docker push "ghcr.io/$(IMAGE_OWNER)/maxprime:$(RELEASE_VERSION)"
 
 apply:
 	kubectl apply -f deployments/service.yaml -n demo
